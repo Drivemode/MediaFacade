@@ -127,7 +127,7 @@ One noteworthy concept is `Bucket`, which is kind of `Album` for images and/or v
 Since there's no specific table that manages each buckets so you need to group by bucket when you query images/videos in SQL.
 `ImageFacade` and `VideoFacade` do grouping for you.
 
-```
+```java
 public class SampleActivity extends Activity {
   private ImageFacade facade;
 
