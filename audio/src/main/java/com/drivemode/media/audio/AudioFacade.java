@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.drivemode.media.common.CursorUtils;
 import com.drivemode.media.common.SortOrder;
 
 
@@ -83,10 +84,23 @@ public class AudioFacade {
 			return resolver.insert(MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI, value);
 		}
 
+		public int getLastPlayOrder(long playlistId) {
+			Cursor cursor = null;
+			try {
+				cursor = fetchPlayableItems(playlistId, new SortOrder(MediaStore.Audio.Playlists.Members.PLAY_ORDER, SortOrder.Order.ASCENDING));
+				if (cursor == null || !cursor.moveToLast())
+					return 0;
+				return cursor.getInt(cursor.getColumnIndex(MediaStore.Audio.Playlists.Members.PLAY_ORDER));
+			} finally {
+				CursorUtils.close(cursor);
+			}
+		}
+
 		public int updateName(long playlistId, String name) {
 			ContentValues value = new ContentValues();
 			value.put(MediaStore.Audio.Playlists.NAME, name);
-			return resolver.update(MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId), value, null, null);
+			return resolver.update(MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI, value,
+					MediaStore.Audio.Playlists._ID + " = ?", new String[] {String.valueOf(playlistId)});
 		}
 
 		public int remove(long playlistId) {
