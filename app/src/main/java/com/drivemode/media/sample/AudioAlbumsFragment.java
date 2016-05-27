@@ -1,5 +1,9 @@
 package com.drivemode.media.sample;
 
+import android.content.ContentUris;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -9,10 +13,12 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.drivemode.media.audio.AudioFacade;
 import com.drivemode.media.common.CursorUtils;
 import com.drivemode.media.sample.databinding.FragmentAudioAlbumsBinding;
+import com.squareup.picasso.Picasso;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -38,9 +44,17 @@ public class AudioAlbumsFragment extends Fragment {
 		binding = FragmentAudioAlbumsBinding.bind(getView());
 		facade = AudioFacade.getInstance(getContext());
 
-		adapter = new SimpleCursorAdapter(getContext(), android.R.layout.simple_list_item_2, null,
+		adapter = new SimpleCursorAdapter(getContext(), R.layout.list_item_album, null,
 				new String[] {MediaStore.Audio.Albums.ALBUM, MediaStore.Audio.Albums.ARTIST},
-				new int[] {android.R.id.text1, android.R.id.text2}, 0);
+				new int[] {R.id.text1, R.id.text2}, 0) {
+			@Override
+			public void bindView(View view, Context context, Cursor cursor) {
+				super.bindView(view, context, cursor);
+				ImageView iv = (ImageView) view.findViewById(R.id.album_art);
+				Uri uri = ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"), cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Albums._ID)));
+				Picasso.with(context).load(uri).resizeDimen(R.dimen.image_size, R.dimen.image_size).centerCrop().into(iv);
+			}
+		};
 		binding.list.setEmptyView(binding.empty);
 		binding.list.setAdapter(adapter);
 		Observable.fromCallable(() -> facade.album().fetchAlbums())
