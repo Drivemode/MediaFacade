@@ -1,6 +1,5 @@
 package com.drivemode.media.sample;
 
-import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -51,7 +50,7 @@ public class AudioAlbumsFragment extends Fragment {
 			public void bindView(View view, Context context, Cursor cursor) {
 				super.bindView(view, context, cursor);
 				ImageView iv = (ImageView) view.findViewById(R.id.album_art);
-				Uri uri = ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"), cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Albums._ID)));
+				Uri uri = facade.album().albumArtUri(cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Albums._ID)));
 				Picasso.with(context).load(uri).resizeDimen(R.dimen.image_size, R.dimen.image_size).centerCrop().into(iv);
 			}
 		};

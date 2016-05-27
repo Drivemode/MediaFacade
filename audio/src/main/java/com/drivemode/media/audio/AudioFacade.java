@@ -1,6 +1,7 @@
 package com.drivemode.media.audio;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -177,6 +178,7 @@ public class AudioFacade {
 	}
 
 	public static class Album {
+		private static final Uri ALBUM_ART_URI_BASE = Uri.parse("content://media/external/audio/albumart");
 		private final Context context;
 		private final ContentResolver resolver;
 
@@ -199,6 +201,10 @@ public class AudioFacade {
 
 		public @Nullable Cursor fetchPlayableItems(long albumId, SortOrder order) {
 			return resolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, MediaStore.Audio.Media.ALBUM_ID + " = ?", new String[]{String.valueOf(albumId)}, order.toSql());
+		}
+
+		public @NonNull Uri albumArtUri(long albumId) {
+			return ContentUris.withAppendedId(ALBUM_ART_URI_BASE, albumId);
 		}
 	}
 
