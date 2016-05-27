@@ -3,10 +3,16 @@ package com.drivemode.media.video;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
+import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 
 import com.drivemode.media.common.SortOrder;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * @author KeithYokoma
@@ -16,14 +22,16 @@ public class VideoFacade {
 	private static VideoFacade instance;
 	private final Bucket bucket;
 	private final Video video;
+	private final Thumbnail thumbnail;
 
 	protected VideoFacade(Context context) {
-		this(new Bucket(context), new Video(context));
+		this(new Bucket(context), new Video(context), new Thumbnail(context));
 	}
 
-	protected VideoFacade(Bucket bucket, Video video) {
+	protected VideoFacade(Bucket bucket, Video video, Thumbnail thumbnail) {
 		this.bucket = bucket;
 		this.video = video;
+		this.thumbnail = thumbnail;
 	}
 
 	public static VideoFacade getInstance(Context context) {
@@ -38,6 +46,10 @@ public class VideoFacade {
 
 	public Video video() {
 		return video;
+	}
+
+	public Thumbnail thumbnail() {
+		return thumbnail;
 	}
 
 	public static class Bucket {
@@ -55,8 +67,7 @@ public class VideoFacade {
 			this.resolver = context.getContentResolver();
 		}
 
-		public @Nullable
-		Cursor fetch() {
+		public @Nullable Cursor fetch() {
 			return fetch(SortOrder.UNSPECIFIED);
 		}
 
@@ -90,5 +101,27 @@ public class VideoFacade {
 			return resolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null,
 					MediaStore.Video.Media.BUCKET_ID + " = ?", new String[]{String.valueOf(bucketId)}, order.toSql());
 		}
+	}
+
+	public static class Thumbnail {
+		private final Context context;
+		private final ContentResolver resolver;
+
+		public Thumbnail(Context context) {
+			this.context = context;
+			this.resolver = context.getContentResolver();
+		}
+
+		public @Nullable Bitmap fetch(long videoId, @Kind int kind) {
+			return fetch(videoId, kind, null);
+		}
+
+		public @Nullable Bitmap fetch(long videoId, @Kind int kind, @Nullable BitmapFactory.Options ops) {
+			return MediaStore.Video.Thumbnails.getThumbnail(resolver, videoId, kind, ops);
+		}
+
+		@Retention(RetentionPolicy.SOURCE)
+		@IntDef({MediaStore.Video.Thumbnails.MINI_KIND, MediaStore.Video.Thumbnails.MICRO_KIND, MediaStore.Video.Thumbnails.FULL_SCREEN_KIND})
+		public @interface Kind {}
 	}
 }
