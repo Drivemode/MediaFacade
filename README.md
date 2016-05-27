@@ -1,6 +1,6 @@
 # MediaFacade
 
-Facade modules for dealing with complicated MediaStore.
+Facade modules for dealing with complicated MediaStore in a simple way.
 
 ## Usage
 
@@ -21,7 +21,7 @@ public class SampleActivity extends Activity {
 
     // ...
 
-    facade = new AudioFacade(this);
+    facade = AudioFacade.getInstance(this);
     Cursor albums = null;
     try {
       albums = facade.album().fetchAlbum();
@@ -46,7 +46,7 @@ public class SampleActivity extends Activity {
 
     // ...
 
-    facade = new AudioFacade(this);
+    facade = AudioFacade.getInstance(this);
     Cursor artists = null;
     try {
       artists = facade.artist().fetchArtists();
@@ -71,7 +71,7 @@ public class SampleActivity extends Activity {
 
     // ...
 
-    facade = new AudioFacade(this);
+    facade = AudioFacade.getInstance(this);
     Cursor genres = null;
     try {
       genres = facade.genre().fetchGenres();
@@ -97,7 +97,7 @@ public class SampleActivity extends Activity {
 
     // ...
 
-    facade = new AudioFacade(this);
+    facade = AudioFacade.getInstance(this);
     Cursor playlists = null;
     try {
       playlists = facade.playlist().fetchGenres();
@@ -137,7 +137,7 @@ public class SampleActivity extends Activity {
 
     // ...
 
-    facade = new ImageFacade(this);
+    facade = ImageFacade.getInstance(this);
     Cursor imageBuckets = null;
     try {
       imageBuckets = facade.bucket().fetch();
