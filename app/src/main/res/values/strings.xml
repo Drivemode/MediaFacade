@@ -32,5 +32,6 @@
     <string name="about_app_license_permissions_dispatcher">PermissionsDispatcher by hotchemi</string>
     <string name="about_app_license_retrolambda">Retrolambda by Esko Luontola</string>
     <string name="about_app_license_rx">RxJava and RxAndroid by ReactiveExtension</string>
+    <string name="about_app_license_picasso">Picasso by Square, Inc.</string>
     <string name="about_app_license_aosp">Android Open Source Project</string>
 </resources>

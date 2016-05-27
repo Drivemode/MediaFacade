@@ -48,7 +48,10 @@
                 android:layout_height="?attr/listPreferredItemHeight"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
+                android:background="?selectableItemBackground"
                 android:text="@string/about_app_license_permissions_dispatcher"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center_vertical"/>
             <TextView
                 android:id="@+id/license_retrolambda"
@@ -56,7 +59,10 @@
                 android:layout_height="?attr/listPreferredItemHeight"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
+                android:background="?selectableItemBackground"
                 android:text="@string/about_app_license_retrolambda"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center_vertical"/>
             <TextView
                 android:id="@+id/license_rx"
@@ -64,7 +70,21 @@
                 android:layout_height="?attr/listPreferredItemHeight"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
+                android:background="?selectableItemBackground"
                 android:text="@string/about_app_license_rx"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"/>
+            <TextView
+                android:id="@+id/license_picasso"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/listPreferredItemHeight"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:background="?selectableItemBackground"
+                android:text="@string/about_app_license_picasso"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center_vertical"/>
             <TextView
                 android:id="@+id/license_aosp"
@@ -72,7 +92,10 @@
                 android:layout_height="?attr/listPreferredItemHeight"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
+                android:background="?selectableItemBackground"
                 android:text="@string/about_app_license_aosp"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center_vertical"/>
         </LinearLayout>
     </ScrollView>
