@@ -13,16 +13,23 @@ import com.drivemode.media.common.SortOrder;
  */
 @SuppressWarnings("unused") // public API
 public class VideoFacade {
+	private static VideoFacade instance;
 	private final Bucket bucket;
 	private final Video video;
 
-	public VideoFacade(Context context) {
+	protected VideoFacade(Context context) {
 		this(new Bucket(context), new Video(context));
 	}
 
-	public VideoFacade(Bucket bucket, Video video) {
+	protected VideoFacade(Bucket bucket, Video video) {
 		this.bucket = bucket;
 		this.video = video;
+	}
+
+	public static VideoFacade getInstance(Context context) {
+		if (instance == null)
+			instance = new VideoFacade(context.getApplicationContext());
+		return instance;
 	}
 
 	public Bucket bucket() {

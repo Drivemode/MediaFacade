@@ -18,23 +18,33 @@ import com.drivemode.media.common.SortOrder;
  */
 @SuppressWarnings("unused") // public API
 public class AudioFacade {
+	private static AudioFacade instance;
+	private final Media media;
 	private final Playlist playlist;
 	private final Album album;
 	private final Genre genre;
 	private final Artist artist;
 
-	public AudioFacade(@NonNull Context context) {
-		this(new Playlist(context), new Album(context), new Genre(context), new Artist(context));
+	protected AudioFacade(@NonNull Context context) {
+		this(new Media(context), new Playlist(context), new Album(context), new Genre(context), new Artist(context));
 	}
 
-	public AudioFacade(@NonNull Playlist playlist,
-					   @NonNull Album album,
-					   @NonNull Genre genre,
-					   @NonNull Artist artist) {
+	protected AudioFacade(@NonNull Media media,
+						  @NonNull Playlist playlist,
+						  @NonNull Album album,
+						  @NonNull Genre genre,
+						  @NonNull Artist artist) {
+		this.media = media;
 		this.playlist = playlist;
 		this.album = album;
 		this.genre = genre;
 		this.artist = artist;
+	}
+
+	public static AudioFacade getInstance(Context context) {
+		if (instance == null)
+			instance = new AudioFacade(context.getApplicationContext());
+		return instance;
 	}
 
 	public @NonNull Playlist playlist() {
@@ -53,6 +63,28 @@ public class AudioFacade {
 		return artist;
 	}
 
+	public @NonNull Media media() {
+		return media;
+	}
+
+	public static class Media {
+		private final Context context;
+		private final ContentResolver resolver;
+
+		public Media(Context context) {
+			this.context = context;
+			this.resolver = context.getContentResolver();
+		}
+
+		public @Nullable MediaItemCursor fetch() {
+			return fetch(SortOrder.UNSPECIFIED);
+		}
+
+		public @Nullable MediaItemCursor fetch(SortOrder order) {
+			return new MediaItemCursor(resolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null, order.toSql()));
+		}
+	}
+
 	public static class Playlist {
 		private final Context context;
 		private final ContentResolver resolver;
@@ -62,20 +94,22 @@ public class AudioFacade {
 			this.resolver = context.getContentResolver();
 		}
 
-		public @Nullable Cursor fetchLists() {
+		public @Nullable PlaylistCursor fetchLists() {
 			return fetchLists(SortOrder.UNSPECIFIED);
 		}
 
-		public @Nullable Cursor fetchLists(SortOrder order) {
-			return resolver.query(MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI, null, null, null, order.toSql());
+		public @Nullable PlaylistCursor fetchLists(SortOrder order) {
+			return new PlaylistCursor(resolver.query(
+					MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI, null, null, null, order.toSql()));
 		}
 
-		public @Nullable Cursor fetchPlayableItems(long playlistId) {
+		public @Nullable PlaylistItemCursor fetchPlayableItems(long playlistId) {
 			return fetchPlayableItems(playlistId, SortOrder.UNSPECIFIED);
 		}
 
-		public @Nullable Cursor fetchPlayableItems(long playlistId, SortOrder order) {
-			return resolver.query(MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId), null, null, null, order.toSql());
+		public @Nullable PlaylistItemCursor fetchPlayableItems(long playlistId, SortOrder order) {
+			return new PlaylistItemCursor(resolver.query(
+					MediaStore.Audio.Playlists.Members.getContentUri("external", playlistId), null, null, null, order.toSql()));
 		}
 
 		public @Nullable Uri createNew(String name) {

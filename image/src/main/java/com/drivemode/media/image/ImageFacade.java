@@ -13,11 +13,23 @@ import com.drivemode.media.common.SortOrder;
  */
 @SuppressWarnings("unused") // public API
 public class ImageFacade {
+	private static ImageFacade instance;
 	private final Bucket bucket;
 	private final Image image;
 
-	public ImageFacade(Context context) {
+	protected ImageFacade(Context context) {
 		this(new Bucket(context), new Image(context));
+	}
+
+	protected ImageFacade(Bucket bucket, Image image) {
+		this.bucket = bucket;
+		this.image = image;
+	}
+
+	public static ImageFacade getInstance(Context context) {
+		if (instance == null)
+			instance = new ImageFacade(context.getApplicationContext());
+		return instance;
 	}
 
 	public Bucket bucket() {
@@ -26,11 +38,6 @@ public class ImageFacade {
 
 	public Image image() {
 		return image;
-	}
-
-	public ImageFacade(Bucket bucket, Image image) {
-		this.bucket = bucket;
-		this.image = image;
 	}
 
 	public static class Bucket {

@@ -1,35 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import"/>
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery"/>
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow"/>
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools"/>
-    </group>
-
-    <item android:title="Communicate">
+    <item android:title="@string/navigation_drawer_group_audio">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share"/>
+                android:id="@+id/nav_audio_all"
+                android:icon="@drawable/ic_menu_music_all"
+                android:title="@string/navigation_drawer_item_audio_all"
+                android:checkable="true"/>
             <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send"/>
+                android:id="@+id/nav_audio_albums"
+                android:icon="@drawable/ic_menu_albums"
+                android:title="@string/navigation_drawer_item_audio_albums"
+                android:checkable="true"/>
+            <item
+                android:id="@+id/nav_audio_artists"
+                android:icon="@drawable/ic_menu_artists"
+                android:title="@string/navigation_drawer_item_audio_artist"
+                android:checkable="true"/>
+            <item
+                android:id="@+id/nav_audio_genres"
+                android:icon="@drawable/ic_menu_genre"
+                android:title="@string/navigation_drawer_item_audio_genres"
+                android:checkable="true"/>
+            <item
+                android:id="@+id/nav_audio_playlist"
+                android:icon="@drawable/ic_menu_playlist"
+                android:title="@string/navigation_drawer_item_audio_playlist"
+                android:checkable="true"/>
+        </menu>
+    </item>
+    <item android:title="@string/navigation_drawer_group_image">
+        <menu>
+            <item
+                android:id="@+id/nav_image_all"
+                android:icon="@drawable/ic_menu_image"
+                android:title="@string/navigation_drawer_item_image_all"
+                android:checkable="true"/>
+            <item
+                android:id="@+id/nav_image_buckets"
+                android:icon="@drawable/ic_menu_folder"
+                android:title="@string/navigation_drawer_item_image_buckets"
+                android:checkable="true"/>
+        </menu>
+    </item>
+    <item android:title="@string/navigation_drawer_group_video">
+        <menu>
+            <item
+                android:id="@+id/nav_video_all"
+                android:icon="@drawable/ic_menu_video"
+                android:title="@string/navigation_drawer_item_video_all"
+                android:checkable="true"/>
+            <item
+                android:id="@+id/nav_video_buckets"
+                android:icon="@drawable/ic_menu_folder"
+                android:title="@string/navigation_drawer_item_video_buckets"
+                android:checkable="true"/>
+        </menu>
+    </item>
+    <item android:title="@string/navigation_drawer_group_about">
+        <menu>
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_menu_about"
+                android:title="@string/navigation_drawer_item_about"
+                android:checkable="true"/>
         </menu>
     </item>
 
