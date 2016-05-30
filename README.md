@@ -157,6 +157,56 @@ public class SampleActivity extends Activity {
 }
 ```
 
+### Cursors
+
+MediaFacade provides customized yet fully Android compatible `Cursor`s for developers to access fields by just calling corresponding methods.
+
+```java
+public class SampleActivity extends Activity {
+  private ImageFacade facade;
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    // ...
+
+    facade = ImageFacade.getInstance(this);
+    ImageCursor imageBuckets = null;
+    try {
+      imageBuckets = facade.bucket().fetch();
+      if (imageBuckets == null)
+        return;
+      while (imageBuckets.moveToNext()) {
+        long bucketId = imageBuckets.id();
+        // you can query images in the specific bucket with this bucketId
+        ImageCursor imagesInBucket = facade.image().fetchByBucket(bucketId);
+        // ...
+      }
+    } finally {
+      if (imageBuckets != null)
+        imageBuckets.close();
+    }
+  }
+}
+```
+
+We have following customized classes of `Cursor`s.
+
+- MediaItemCursor
+- AlbumCursor
+- AlbumItemCursor
+- GenreCursor
+- GenreItemCursor
+- ArtistCursor
+- ArtistItemCursor
+- PlaylistCurosr
+- PlaylistItemCurosr
+- ImageCursor
+- VideoCursor
+
+These `Cursor`s are subclasses of `Cursor` so that you can use them with `CursorAdapter` and various `Cursor` API.
+
 ## License
 
 Apache v2
