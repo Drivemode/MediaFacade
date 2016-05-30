@@ -5,12 +5,12 @@
         <menu>
             <item
                 android:id="@+id/nav_audio_all"
-                android:icon="@drawable/ic_menu_music_all"
+                android:icon="@drawable/ic_menu_audio"
                 android:title="@string/navigation_drawer_item_audio_all"
                 android:checkable="true"/>
             <item
                 android:id="@+id/nav_audio_albums"
-                android:icon="@drawable/ic_menu_albums"
+                android:icon="@drawable/ic_menu_album"
                 android:title="@string/navigation_drawer_item_audio_albums"
                 android:checkable="true"/>
             <item
