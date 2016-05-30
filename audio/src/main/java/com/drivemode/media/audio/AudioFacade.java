@@ -187,20 +187,20 @@ public class AudioFacade {
 			this.resolver = context.getContentResolver();
 		}
 
-		public @Nullable Cursor fetchAlbums() {
+		public @Nullable AlbumCursor fetchAlbums() {
 			return fetchAlbums(SortOrder.UNSPECIFIED);
 		}
 
-		public @Nullable Cursor fetchAlbums(SortOrder order) {
-			return resolver.query(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI, null, null, null, order.toSql());
+		public @Nullable AlbumCursor fetchAlbums(SortOrder order) {
+			return new AlbumCursor(resolver.query(MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI, null, null, null, order.toSql()));
 		}
 
-		public @Nullable Cursor fetchPlayableItems(long albumId) {
+		public @Nullable AlbumItemCursor fetchPlayableItems(long albumId) {
 			return fetchPlayableItems(albumId, SortOrder.UNSPECIFIED);
 		}
 
-		public @Nullable Cursor fetchPlayableItems(long albumId, SortOrder order) {
-			return resolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, MediaStore.Audio.Media.ALBUM_ID + " = ?", new String[]{String.valueOf(albumId)}, order.toSql());
+		public @Nullable AlbumItemCursor fetchPlayableItems(long albumId, SortOrder order) {
+			return new AlbumItemCursor(resolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, MediaStore.Audio.Media.ALBUM_ID + " = ?", new String[]{String.valueOf(albumId)}, order.toSql()));
 		}
 
 		public @NonNull Uri albumArtUri(long albumId) {
@@ -217,20 +217,20 @@ public class AudioFacade {
 			this.resolver = context.getContentResolver();
 		}
 
-		public @Nullable Cursor fetchGenres() {
+		public @Nullable GenreCursor fetchGenres() {
 			return fetchGenres(SortOrder.UNSPECIFIED);
 		}
 
-		public @Nullable Cursor fetchGenres(SortOrder order) {
-			return resolver.query(MediaStore.Audio.Genres.EXTERNAL_CONTENT_URI, null, null, null, order.toSql());
+		public @Nullable GenreCursor fetchGenres(SortOrder order) {
+			return new GenreCursor(resolver.query(MediaStore.Audio.Genres.EXTERNAL_CONTENT_URI, null, null, null, order.toSql()));
 		}
 
-		public @Nullable Cursor fetchPlayableItems(long genreId) {
+		public @Nullable GenreItemCursor fetchPlayableItems(long genreId) {
 			return fetchPlayableItems(genreId, SortOrder.UNSPECIFIED);
 		}
 
-		public @Nullable Cursor fetchPlayableItems(long genreId, SortOrder order) {
-			return resolver.query(MediaStore.Audio.Genres.Members.getContentUri("external", genreId), null, null, null, order.toSql());
+		public @Nullable GenreItemCursor fetchPlayableItems(long genreId, SortOrder order) {
+			return new GenreItemCursor(resolver.query(MediaStore.Audio.Genres.Members.getContentUri("external", genreId), null, null, null, order.toSql()));
 		}
 	}
 
@@ -243,20 +243,20 @@ public class AudioFacade {
 			this.resolver = context.getContentResolver();
 		}
 
-		public @Nullable Cursor fetchArtists() {
+		public @Nullable ArtistCursor fetchArtists() {
 			return fetchArtists(SortOrder.UNSPECIFIED);
 		}
 
-		public @Nullable Cursor fetchArtists(SortOrder order) {
-			return resolver.query(MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI, null, null, null, order.toSql());
+		public @Nullable ArtistCursor fetchArtists(SortOrder order) {
+			return new ArtistCursor(resolver.query(MediaStore.Audio.Artists.EXTERNAL_CONTENT_URI, null, null, null, order.toSql()));
 		}
 
-		public @Nullable Cursor fetchAlbums(long artistId) {
+		public @Nullable ArtistItemCursor fetchAlbums(long artistId) {
 			return fetchAlbums(artistId, SortOrder.UNSPECIFIED);
 		}
 
-		public @Nullable Cursor fetchAlbums(long artistId, SortOrder order) {
-			return resolver.query(MediaStore.Audio.Artists.Albums.getContentUri("external", artistId), null, null, null, order.toSql());
+		public @Nullable ArtistItemCursor fetchAlbums(long artistId, SortOrder order) {
+			return new ArtistItemCursor(resolver.query(MediaStore.Audio.Artists.Albums.getContentUri("external", artistId), null, null, null, order.toSql()));
 		}
 	}
 }

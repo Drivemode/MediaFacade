@@ -9,16 +9,18 @@ import com.drivemode.media.common.BaseCursor;
  * @author KeishinYokomaku
  */
 @SuppressWarnings("unused") // public API
-public class MediaItemCursor extends BaseCursor {
-	public MediaItemCursor(Cursor cursor) {
+public class AlbumItemCursor extends BaseCursor {
+	public static final String TAG = AlbumItemCursor.class.getSimpleName();
+
+	public AlbumItemCursor(Cursor cursor) {
 		super(cursor);
 	}
 
 	/**
-	 * @return Data for {@link android.provider.MediaStore.Audio.Media#_ID}
+	 * @return Data for {@link android.provider.MediaStore.Audio.Albums#_ID}
 	 */
 	public long id() {
-		return getLong(MediaStore.Audio.Playlists._ID);
+		return getLong(MediaStore.Audio.Albums._ID);
 	}
 
 	/**

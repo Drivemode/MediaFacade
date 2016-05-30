@@ -8,6 +8,7 @@ import com.drivemode.media.common.BaseCursor;
 /**
  * @author KeithYokoma
  */
+@SuppressWarnings("unused") // public API
 public class PlaylistCursor extends BaseCursor {
 	public PlaylistCursor(Cursor cursor) {
 		super(cursor);
