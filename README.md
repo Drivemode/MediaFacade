@@ -207,6 +207,17 @@ We have following customized classes of `Cursor`s.
 
 These `Cursor`s are subclasses of `Cursor` so that you can use them with `CursorAdapter` and various `Cursor` API.
 
+## Download
+
+Gradle:
+
+```
+compile 'com.drivemode:mediafacade-audio:0.1.0@aar'
+compile 'com.drivemode:mediafacade-image:0.1.0@aar'
+compile 'com.drivemode:mediafacade-video:0.1.0@aar'
+```
+
+
 ## License
 
 Apache v2
