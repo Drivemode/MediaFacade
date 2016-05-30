@@ -32,6 +32,10 @@ public abstract class BaseCursor extends CrossProcessCursorWrapper {
 		return getLong(getCachedColumnIndexOrThrow(column));
 	}
 
+	public double getDouble(String column) {
+		return getDouble(getCachedColumnIndexOrThrow(column));
+	}
+
 	public String getString(String column) {
 		return getString(getCachedColumnIndexOrThrow(column));
 	}

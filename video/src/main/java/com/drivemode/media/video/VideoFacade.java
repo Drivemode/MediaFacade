@@ -85,21 +85,21 @@ public class VideoFacade {
 			this.resolver = context.getContentResolver();
 		}
 
-		public @Nullable Cursor fetch() {
+		public @Nullable VideoCursor fetch() {
 			return fetch(SortOrder.UNSPECIFIED);
 		}
 
-		public @Nullable Cursor fetch(SortOrder order) {
-			return resolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null, null, null, order.toSql());
+		public @Nullable VideoCursor fetch(SortOrder order) {
+			return new VideoCursor(resolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null, null, null, order.toSql()));
 		}
 
-		public @Nullable Cursor fetchByBucket(long bucketId) {
+		public @Nullable VideoCursor fetchByBucket(long bucketId) {
 			return fetchByBucket(bucketId, SortOrder.UNSPECIFIED);
 		}
 
-		public @Nullable Cursor fetchByBucket(long bucketId, SortOrder order) {
-			return resolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null,
-					MediaStore.Video.Media.BUCKET_ID + " = ?", new String[]{String.valueOf(bucketId)}, order.toSql());
+		public @Nullable VideoCursor fetchByBucket(long bucketId, SortOrder order) {
+			return new VideoCursor(resolver.query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null,
+					MediaStore.Video.Media.BUCKET_ID + " = ?", new String[]{String.valueOf(bucketId)}, order.toSql()));
 		}
 	}
 

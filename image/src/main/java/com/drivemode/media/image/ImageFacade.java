@@ -2,7 +2,6 @@ package com.drivemode.media.image;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.database.Cursor;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 
@@ -55,12 +54,12 @@ public class ImageFacade {
 			this.resolver = context.getContentResolver();
 		}
 
-		public @Nullable Cursor fetch() {
+		public @Nullable ImageCursor fetch() {
 			return fetch(SortOrder.UNSPECIFIED);
 		}
 
-		public @Nullable Cursor fetch(SortOrder order) {
-			return resolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, BUCKET_PROJECTION, BUCKET_GROUP_BY, null, order.toSql());
+		public @Nullable ImageCursor fetch(SortOrder order) {
+			return new ImageCursor(resolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, BUCKET_PROJECTION, BUCKET_GROUP_BY, null, order.toSql()));
 		}
 	}
 
@@ -73,21 +72,21 @@ public class ImageFacade {
 			this.resolver = context.getContentResolver();
 		}
 
-		public @Nullable Cursor fetch() {
+		public @Nullable ImageCursor fetch() {
 			return fetch(SortOrder.UNSPECIFIED);
 		}
 
-		public @Nullable Cursor fetch(SortOrder order) {
-			return resolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, order.toSql());
+		public @Nullable ImageCursor fetch(SortOrder order) {
+			return new ImageCursor(resolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, order.toSql()));
 		}
 
-		public @Nullable Cursor fetchByBucket(long bucketId) {
+		public @Nullable ImageCursor fetchByBucket(long bucketId) {
 			return fetchByBucket(bucketId, SortOrder.UNSPECIFIED);
 		}
 
-		public @Nullable Cursor fetchByBucket(long bucketId, SortOrder order) {
-			return resolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null,
-					MediaStore.Images.Media.BUCKET_ID + " = ?", new String[]{String.valueOf(bucketId)}, order.toSql());
+		public @Nullable ImageCursor fetchByBucket(long bucketId, SortOrder order) {
+			return new ImageCursor(resolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null,
+					MediaStore.Images.Media.BUCKET_ID + " = ?", new String[]{String.valueOf(bucketId)}, order.toSql()));
 		}
 	}
 }
